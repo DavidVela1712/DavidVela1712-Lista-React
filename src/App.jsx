@@ -1,7 +1,7 @@
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { CloseButton, Col, Container, Row } from "react-bootstrap";
+import { CloseButton, Col, Container, Row} from "react-bootstrap";
 import { useState } from "react";
 
 let nextId = 0;
@@ -31,19 +31,22 @@ export const App = () => {
       <Container fluid className="d-flex flex-column justify-content-center align-items-center">
         <Row>
           <Col>
-            <h1>Escultores inspiradores:</h1>
+            <h1>Lista actualizada:</h1>
             <input
+              className="form-control"
               value={frase}
               onChange={e => setFrase(e.target.value)}
               onKeyDown={pulsarEnter}
+              placeholder="Escribe la frase"
             />
           </Col>
         </Row>
         <Row>
           <Col>
               {lista.map(e => (
-                <div><p key={e.id}>{e.frase}</p>
-                <CloseButton onClick={() => eliminarLista(e.id)}></CloseButton></div>
+                <div key={e.id} className="d-flex align-items-center justify-content-between position-relative">
+                  <p>{e.frase}<CloseButton onClick={() => eliminarLista(e.id)}></CloseButton></p>
+                </div>
               ))}
           </Col>
         </Row>
