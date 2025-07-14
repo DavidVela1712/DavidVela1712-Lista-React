@@ -1,7 +1,7 @@
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { CloseButton, Col, Container, Row} from "react-bootstrap";
+import { Card, CloseButton, Col, Container, Row } from "react-bootstrap";
 import { useState } from "react";
 
 let nextId = 0;
@@ -12,12 +12,12 @@ export const App = () => {
   const [lista, setLista] = useState([]);
 
   const añadirLista = () => {
-    setLista([...lista, {id: nextId++, frase}]);
-    setFrase('');    
+    setLista([...lista, { id: nextId++, frase }]);
+    setFrase('');
   };
 
   const pulsarEnter = (e) => {
-    if(e.key === "Enter") {
+    if (e.key === "Enter") {
       añadirLista();
     }
   };
@@ -28,26 +28,28 @@ export const App = () => {
 
   return (
     <>
-      <Container fluid className="d-flex flex-column justify-content-center align-items-center">
-        <Row>
-          <Col>
-            <h1>Lista actualizada:</h1>
-            <input
-              className="form-control"
-              value={frase}
-              onChange={e => setFrase(e.target.value)}
-              onKeyDown={pulsarEnter}
-              placeholder="Escribe la frase"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-              {lista.map(e => (
-                <div key={e.id} className="d-flex align-items-center justify-content-between position-relative">
-                  <p>{e.frase}<CloseButton onClick={() => eliminarLista(e.id)}></CloseButton></p>
-                </div>
-              ))}
+      <Container fluid>
+        <Row className="justify-content-center">
+          <Col lg={6}>
+            <Card className="shadow">
+              <Card.Body>
+                <h1 className="text-center">Lista actualizada:</h1>
+                <input
+                  className="form-control w-100 mb-3"
+                  value={frase}
+                  onChange={e => setFrase(e.target.value)}
+                  onKeyDown={pulsarEnter}
+                  placeholder="Escribe la frase"
+                />
+                {lista.map(e => (
+                  <div key={e.id} className="frase d-flex align-items-center justify-content-between w-100">
+                    <span>{e.frase}</span>
+                    <CloseButton className="ocultar-boton ms-3" onClick={() => eliminarLista(e.id)}></CloseButton>
+                  </div>
+                ))}
+              </Card.Body>
+              <Card.Footer className="text-muted small">{lista.length} frases</Card.Footer>
+            </Card>
           </Col>
         </Row>
       </Container>
