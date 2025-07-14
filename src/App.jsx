@@ -10,6 +10,7 @@ export const App = () => {
 
   const [frase, setFrase] = useState('');
   const [lista, setLista] = useState([]);
+  const [ocultarX, setOcultarX] = useState(false);
 
   const añadirLista = () => {
     setLista([...lista, { id: nextId++, frase }]);
@@ -42,9 +43,16 @@ export const App = () => {
                   placeholder="Escribe la frase"
                 />
                 {lista.map(e => (
-                  <div key={e.id} className="frase d-flex align-items-center justify-content-between w-100">
+                  <div key={e.id} className="frase d-flex align-items-center justify-content-between w-100"
+                    onMouseEnter={() => setOcultarX(true)}
+                    onMouseLeave={() => setOcultarX(false)}
+                  >
                     <span>{e.frase}</span>
-                    <CloseButton className="ocultar-boton ms-3" onClick={() => eliminarLista(e.id)}></CloseButton>
+                    {
+                      ocultarX && (
+                        <CloseButton className="ocultar-boton ms-3" onClick={() => eliminarLista(e.id)}></CloseButton>
+                      )
+                    }
                   </div>
                 ))}
               </Card.Body>
