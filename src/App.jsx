@@ -2,7 +2,7 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Card, CloseButton, Col, Container, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 let nextId = 0;
 
@@ -13,8 +13,10 @@ export const App = () => {
   const [ocultarX, setOcultarX] = useState(false);
 
   const añadirLista = () => {
-    setLista([...lista, { id: nextId++, frase }]);
+    if(frase.trim() !== "") {
+      setLista([...lista, { id: nextId++, frase }]);
     setFrase('');
+    }
   };
 
   const pulsarEnter = (e) => {
@@ -26,6 +28,20 @@ export const App = () => {
   const eliminarLista = (id) => {
     setLista(lista.filter(a => a.id !== id))
   }
+
+  useEffect(() => {
+    fetch('https://playground.4geeks.com/todo/users/DavidVela1712', {
+      method: 'GET'
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(responseJSON => {
+      setLista(responseJSON.label)
+    })
+    .catch()
+    .finally()
+  }, []);
 
   return (
     <>
@@ -42,6 +58,11 @@ export const App = () => {
                   onKeyDown={pulsarEnter}
                   placeholder="Escribe la frase"
                 />
+                {
+                  lista.length === 0 && (
+                    <p className="text-center">No tasks, add a task</p>
+                  )
+                }
                 {lista.map(e => (
                   <div key={e.id} className="frase d-flex align-items-center justify-content-between w-100"
                     onMouseEnter={() => setOcultarX(true)}
