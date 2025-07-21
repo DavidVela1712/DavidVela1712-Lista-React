@@ -1,7 +1,0 @@
-.ocultar-boton {
-    visibility: hidden;
-}
-
-.frase:hover .ocultar-boton{
-    visibility: visible;
-}
